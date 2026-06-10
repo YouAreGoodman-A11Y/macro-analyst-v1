@@ -36,6 +36,11 @@
 **验证依据**：高频多周期盘面数据
 
 ## 1. 逐条批改与验证打分
+### 🔍 全球商品宏观 (铜金比等)
+* **P17 理论预期**: [...]
+* **盘面真实价差**: [Global_Commo_Risk_20d_Spread 等]
+* **批改结论**: [符合/中性/打脸] -> [得分]
+
 ### 🔍 信用雷达 (HYG)
 * **P17 理论预期**: [...]
 * **盘面真实动量**: [HYG 20d 涨跌幅 X%，5d 涨跌幅 Y%]
@@ -70,10 +75,41 @@
 市场广度现况: "[基于RTY/NDX的真实情况]"
 当前市场主线交易: "[一句话概括资金此刻真实在交易什么]"
 ```
+
+## 4. 宏观实盘执行指令 (Macro Policy JSON)
+*(必须在报告最末尾，强制输出一段严格的 JSON，供下游量化 RL 引擎读取。根据前文对 macro_spreads 和 market_liquidity 的真实打分与定性，综合判定并严格输出当前的宏观状态。)*
+
+**【全球宏观状态 (macro_state) 判定指南】**
+在最后裁决状态时，请综合考量以下维度：
+1. **信用与高收益债**：HYG 表现是否坚挺。
+2. **市场广度**：RTY 是否跑赢 NDX，体现全面复苏还是抱团。
+3. **外资态度 (汇率)**：USD/JPY 或 USD/CNY 汇率趋势，反映全球套息交易和资本流向。
+4. **全球宏观商品**：铜金比价差(`Global_Commo_Risk_20d_Spread`)。
+
+在输出 JSON 前，必须严格按照以下格式展示你的逐条推演过程（Chain of Thought），必须把推理过程也写进报告：
+
+**【宏观状态判定推演】**
+依据 Heuristics 逐条检查：
+1. **信用与广度 (HYG/RTY)**: [提取盘面数据并分析] → **[偏向 RISK_ON / DEFENSIVE / NEUTRAL]**
+2. **外汇与流动性**: [提取真实数据并分析] → **[偏向 RISK_ON / DEFENSIVE / NEUTRAL]**
+3. **全球宏观商品**: [提取真实数据并分析] → **[偏向 RISK_ON / DEFENSIVE / NEUTRAL]**
+
+**综合裁决**: [用一两句话总结全球宏观水温，给出确定的 macro_state]
+
+```json
+{
+  "macro_state": "[RISK_ON / DEFENSIVE / NEUTRAL]",
+  "recommended_universe": "[csi1000 / csi300_plus_dividend / all_a_shares]",
+  "rl_parameters": {
+    "cash_ratio_min": [0.0 到 0.5 之间的浮点数，防守期必须调高]
+  }
+}
 ```
+```
+
 
 # Context (User Input)
 1. **P17生成的《宏观基调设定与预期备忘录》:**
 {{p17_memo}}
-2. **实时高频市场多周期数据 (JSON格式):**
+2. **实时高频市场多周期数据 (JSON格式，通过执行 `python /root/.openclaw/workspace-macro_analyst/skills/Macro-Analyst-V1/scripts/get_high_freq_with_changes.py` 获取):**
 {{high_freq_data_json}}

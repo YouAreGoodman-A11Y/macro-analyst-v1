@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 获取包含多周期涨跌幅的高频市场数据，输出JSON格式供P18使用
+注意：数据由 fetch_high_freq_with_changes_v5.py 生成
 """
 
 import pandas as pd
@@ -17,7 +18,7 @@ def get_latest_high_freq_with_changes():
         data_dir = "/root/.openclaw/workspace-macro_analyst/skills/Macro-Analyst-V1/HighFreq_Monitor/highfreq_macro_data"
         json_files = glob.glob(os.path.join(data_dir, "high_freq_changes_*.json"))
         if not json_files:
-            return None, "未找到高频数据文件，请先运行 fetch_high_freq_with_changes.py"
+            return None, "未找到高频数据文件，请先运行 fetch_high_freq_with_changes_v5.py"
         
         latest_json = max(json_files, key=os.path.getmtime)
         with open(latest_json, 'r', encoding='utf-8') as f:
@@ -49,6 +50,7 @@ def main():
             "changes_5d": data.get("changes_5d", {}),
             "changes_20d": data.get("changes_20d", {}),
             "changes_60d": data.get("changes_60d", {}),
+            "macro_spreads": data.get("macro_spreads", {}),
             "is_trading_day": data.get("is_trading_day", True),
             "source": "high_freq_with_changes_multiduration"
         }
