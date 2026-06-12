@@ -11,7 +11,7 @@ import glob
 def get_latest_cn_macro_4d():
     try:
         data_dir = "/root/.openclaw/workspace-macro_analyst/skills/Macro-Analyst-V1/HighFreq_Monitor/cn_macro_4d_data"
-        json_files = glob.glob(os.path.join(data_dir, "cn_macro_4d_*.json"))
+        json_files = glob.glob(os.path.join(data_dir, "cn_macro_4d*.json"))
         if not json_files:
             return None, "未找到 4D 宏观数据文件，请先运行 fetch_cn_macro_4d.py"
         

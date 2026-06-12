@@ -65,18 +65,8 @@
 整合分析：
 1. **全球外盘水温 (P18)**: [提取 P18 核心状态]
 2. **中国内盘水温 (P20)**: [提取 P20 核心状态，极高权重]
-**综合裁决**: [用一句话总结最终定调，给出最终确定的 macro_state 和选股池]
+**综合裁决**: [用一句话总结最终定调，给出最终确定的 macro_state（RISK_ON / DEFENSIVE / NEUTRAL / EXTREME_PANIC） 和选股池]
 
-```json
-{
-  "macro_state": "[RISK_ON / DEFENSIVE / NEUTRAL / EXTREME_PANIC]",
-  "recommended_universe": "[csi1000 / csi300_plus_dividend / all_a_shares]",
-  "rl_parameters": {
-    "cash_ratio_min": [0.0 到 0.5 之间的浮点数，防守期或缩量期必须大幅调高]
-  }
-}
-```
-```
 
 # Context (User Input)
 1. **P20生成的《中国本土宏观与流动性洞察报告》:** 

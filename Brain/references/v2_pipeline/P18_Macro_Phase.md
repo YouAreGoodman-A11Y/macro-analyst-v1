@@ -96,16 +96,6 @@
 
 **综合裁决**: [用一两句话总结全球宏观水温，给出确定的 macro_state]
 
-```json
-{
-  "macro_state": "[RISK_ON / DEFENSIVE / NEUTRAL]",
-  "recommended_universe": "[csi1000 / csi300_plus_dividend / all_a_shares]",
-  "rl_parameters": {
-    "cash_ratio_min": [0.0 到 0.5 之间的浮点数，防守期必须调高]
-  }
-}
-```
-```
 
 
 # Context (User Input)
